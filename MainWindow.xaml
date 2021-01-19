@@ -1,0 +1,81 @@
+﻿<Window x:Class="Superflat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Superflat"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+        <local:DragAndDropListBox x:Name="blockList" ItemsSource="{Binding Blocks,Mode=OneWay}" SelectionMode="Single" HorizontalAlignment="Left" Margin="10,10,0,55.4" Width="150" Drop="RemoveDrop"/>
+        <ListBox x:Name="selectedBlockList" ItemsSource="{Binding SelectedBlocks,Mode=OneWay}" AllowDrop="True" SelectionMode="Extended" HorizontalAlignment="Left" Margin="200,10,0,55.4" Width="150" Drop="AddDrop" KeyDown="RemoveSelected"/>
+        <Button Content="→" HorizontalAlignment="Left" Height="30" Margin="165,10,0,0" VerticalAlignment="Top" Width="30" Click="AddButton_Click"/>
+        <Button Content="×" HorizontalAlignment="Left" Height="30" Margin="165,45,0,0" VerticalAlignment="Top" Width="30" Click="RemoveButton_Click"/>
+        <TextBox x:Name="countBox" HorizontalAlignment="Left" Height="23" Margin="165,80,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="30" PreviewKeyDown="countBox_PreviewKeyDown"/>
+        <Button Content="清空" HorizontalAlignment="Left" Height="30" Margin="165,0,0,55.4" VerticalAlignment="Bottom" Width="30" Click="ClearButton_Click"/>
+        <ScrollViewer BorderBrush="DarkGray" BorderThickness="1"  Margin="355,10,9.6,55.4">
+            <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.BiomeEnabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">生物群系</Label>
+                    <ComboBox ItemsSource="{Binding Biomes}" SelectedItem="{Binding Builder.Biome}" SelectionChanged="UpdateCallback"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Village.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">村庄</Label>
+                </StackPanel>
+                <local:NullableBox Title="大小(默认1, 1~65535)" NumberOnly="True" ValueInt="{Binding Builder.Village.Size,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+                <local:NullableBox Title="距离(默认32, 9~32)" NumberOnly="True" ValueInt="{Binding Builder.Village.Distance,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Stronghold.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">要塞</Label>
+                </StackPanel>
+                <local:NullableBox Title="数量(默认3)" NumberOnly="True" ValueInt="{Binding Builder.Stronghold.Count,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+                <local:NullableBox Title="距离(默认32.0, ≥1.0)" NumberOnly="True" AllowDecimal="True" ValueFloat="{Binding Builder.Stronghold.Distance,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+                <local:NullableBox Title="集中度(默认3.0 ≥1.0)" NumberOnly="True" AllowDecimal="True" ValueFloat="{Binding Builder.Stronghold.Spread,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Mineshaft.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">废弃矿井</Label>
+                </StackPanel>
+                <local:NullableBox Title="距离(默认0.1, 0.0~1.0)" NumberOnly="True" AllowDecimal="True" ValueFloat="{Binding Builder.Mineshaft.Chance,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Biome1.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">群落附加建筑</Label>
+                </StackPanel>
+                <local:NullableBox Title="距离(默认32, ≥9)" NumberOnly="True" ValueInt="{Binding Builder.Biome1.Distance,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Dungeon.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">地牢</Label>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Decoration.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">树木，草等</Label>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Lake.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">湖</Label>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.LavaLake.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">熔岩湖</Label>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Builder.Oceanmonument.Enabled,Mode=OneWayToSource}" VerticalContentAlignment="Center" Checked="UpdateCallback" Unchecked="UpdateCallback"/>
+                    <Label FontSize="20">海底神殿</Label>
+                </StackPanel>
+                <local:NullableBox Title="网格大小(默认32, ≥1)" NumberOnly="True" ValueInt="{Binding Builder.Oceanmonument.Spacing,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+                <local:NullableBox Title="距离(必须大于网格大小)(默认5, ≥1)" NumberOnly="True" ValueInt="{Binding Builder.Oceanmonument.Separation,Mode=OneWayToSource}" Margin="20,0,0,0" ValueChanged="UpdateCallback"/>
+            </StackPanel>
+        </ScrollViewer>
+        <TextBox x:Name="resultBox" Height="40" IsReadOnly="True" Margin="10,0,10,10" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>

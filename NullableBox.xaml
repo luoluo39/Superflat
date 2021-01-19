@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Superflat.NullableBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="100">
+    <DockPanel VerticalAlignment="Center" LastChildFill="True">
+        <CheckBox x:Name="check" VerticalContentAlignment="Center" Content="{Binding Title,Mode=OneWay}" Checked="check_Checked" Unchecked="check_Unchecked" Margin="5,0,0,0"/>
+        <TextBox x:Name="text" PreviewKeyDown="UIElement_OnPreviewKeyDown" Margin="5,0,0,0" TextChanged="text_TextChanged" />
+    </DockPanel>
+</UserControl>
