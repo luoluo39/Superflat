@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Superflat"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="Superflat" Height="600" Width="800">
     <Grid>
         <local:DragAndDropListBox x:Name="blockList" ItemsSource="{Binding Blocks,Mode=OneWay}" SelectionMode="Single" HorizontalAlignment="Left" Margin="10,10,0,55.4" Width="150" Drop="RemoveDrop"/>
         <ListBox x:Name="selectedBlockList" ItemsSource="{Binding SelectedBlocks,Mode=OneWay}" AllowDrop="True" SelectionMode="Extended" HorizontalAlignment="Left" Margin="200,10,0,55.4" Width="150" Drop="AddDrop" KeyDown="RemoveSelected"/>
