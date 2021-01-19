@@ -159,7 +159,7 @@ namespace Superflat
         public string GetString()
         {
             var parts = new List<string>();
-            parts.Add(string.Join(",", Layers.Select(t => t.IdString)));
+            parts.Add(string.Join(",", Layers.Select(t => t.IdString).Reverse()));
 
             if (BiomeEnabled && Biome != null)
             {
