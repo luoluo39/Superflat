@@ -136,7 +136,8 @@ namespace Superflat
                 int sourceIndex = m_ListBox.Items.IndexOf(source);
                 int targetIndex = m_ListBox.Items.IndexOf(target);
 
-                Move(source, sourceIndex, targetIndex);
+                if (sourceIndex >= 0 && targetIndex >= 0)
+                    Move(source, sourceIndex, targetIndex);
             }
         }
 
